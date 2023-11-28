@@ -1,126 +1,141 @@
 <template>
-  <div class="max-w-3xl mx-auto">
-    <div class="flex items-center justify-center">
-      <div v-if="!mulaiSoal">
-        <div class="flex my-4">
-          <label for="nama">Nama:</label>
+  <div class="min-h-screen flex items-center justify-center">
+    <div v-if="!mulaiSoal" class="bg-white p-8 rounded shadow-lg">
+      <h1 class="text-3xl font-bold mb-4 text-center">Ujian Online</h1>
+      <form @submit.prevent="kerjakanSoal">
+        <div class="mb-4">
+          <label for="nama" class="block text-sm font-medium text-gray-600">
+            Nama:
+          </label>
           <input
             v-model="nama"
             type="text"
             id="nama"
-            class="border-2 rounded ml-2 px-2 py-1"
+            class="border-2 rounded w-full px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-300"
             placeholder="Isi nama disini yaa..."
           />
         </div>
 
-        <div class="flex mb-4">
-          <label for="kelas">Kelas:</label>
+        <div class="mb-4">
+          <label for="kelas" class="block text-sm font-medium text-gray-600">
+            Kelas:
+          </label>
           <input
             v-model="kelas"
             type="number"
             id="kelas"
             :min="1"
             :max="12"
-            class="border-2 rounded ml-2 px-2 py-1"
+            class="border-2 rounded w-full px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-300"
             placeholder="1"
           />
         </div>
 
-        <div class="flex mb-4">
-          <label>Jenis Kelamin:</label>
-
-          <div class="ml-2">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-600 my-2">
+            Jenis Kelamin:
+          </label>
+          <div class="flex items-center">
             <input
               type="radio"
               id="laki-laki"
               v-model="jenisKelamin"
               value="laki-laki"
+              class="mr-1"
             />
-            <label for="laki-laki" class="ml-1">Laki-laki</label>
-          </div>
-
-          <div class="ml-4">
+            <label for="laki-laki" class="text-sm">Laki-laki</label>
             <input
               type="radio"
               id="perempuan"
               v-model="jenisKelamin"
               value="perempuan"
+              class="ml-4 mr-1"
             />
-            <label for="perempuan" class="ml-1">Perempuan</label>
+            <label for="perempuan" class="text-sm">Perempuan</label>
           </div>
         </div>
+
         <button
-          @click="kerjakanSoal"
-          class="bg-blue-500 text-white px-4 py-2 rounded"
+          type="submit"
+          class="w-full bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600"
           :disabled="!inputValid"
         >
           Mulai
         </button>
-      </div>
+      </form>
     </div>
+    <!-- soal -->
+    <div class="min-h-full flex items-center justify-center bg-gray-100">
+      <div
+        v-if="mulaiSoal"
+        class="bg-white p-14 rounded-lg shadow-md w-full max-w-4xl"
+      >
+        <h1 class="text-3xl font-bold mb-4 text-center">Ujian Online</h1>
 
-    <div class="flex items-center justify-center">
-      <div v-if="mulaiSoal">
-        <h1 class="text-2xl font-bold mb-4">Ujian Online</h1>
-
-        <div class="flex items-center justify-center">
-          <div class="relative">
-            <div
-              class="w-28 h-28 bg-gray-200 rounded-full flex items-center justify-center"
-            >
-              <p class="text-4xl font-bold text-red-500">
-                {{ Math.floor(timer / 60) }}:{{
-                  timer % 60 < 10 ? "0" + (timer % 60) : timer % 60
-                }}
+        <div class="flex">
+          <div class="w-3/4 pr-6">
+            <!-- Perubahan disini: Menambahkan padding kanan -->
+            <div v-for="(question, key) in soalYangDilihat" :key="question.id">
+              <p class="text-lg font-semibold mb-4">
+                {{ question.id }}. {{ question.pertanyaan }}
               </p>
+              <div
+                v-for="answer in question.answers"
+                :key="answer.content"
+                class="flex items-center mb-2"
+              >
+                <input
+                  type="radio"
+                  :name="key"
+                  :id="answer.content"
+                  :value="answer.content"
+                  v-model="question.jawabanYangDipilih"
+                  :disabled="tampilkanHasil"
+                  class="mr-2"
+                />
+                <label :for="answer.content" class="text-md">{{
+                  answer.content
+                }}</label>
+              </div>
             </div>
-            <div
-              class="absolute top-0 left-0 w-full h-full rounded-full transform rotate-90"
-            ></div>
-          </div>
-        </div>
 
-        <div
-          v-for="(question, key) in soalYangDilihat"
-          :key="question.id"
-          class="mb-4"
-        >
-          <p>{{ question.pertanyaan }}</p>
-          <div v-for="answer in question.answers" :key="answer.content">
-            <input
-              type="radio"
-              :name="key"
-              :id="answer.content"
-              :value="answer.content"
-              v-model="question.jawabanYangDipilih"
-              :disabled="tampilkanHasil"
-            />
-            <label :for="answer.content" class="ml-2">{{
-              answer.content
-            }}</label>
+            <div class="mt-4 flex justify-between">
+              <button
+                @click="kembaliPertanyaan"
+                :disabled="indeksPertanyaan === 0"
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Sebelumnya
+              </button>
+              <button
+                @click="nextPertanyaan"
+                :disabled="indeksPertanyaan === soal.length - 1"
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Selanjutnya
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div class="mt-4">
-          <button
-            @click="kembaliPertanyaan"
-            :disabled="indeksPertanyaan === 0"
-            class="bg-gray-300 text-gray-600 px-4 py-2 rounded mr-2"
-          >
-            Sebelumnya
-          </button>
-          <button
-            @click="nextPertanyaan"
-            :disabled="indeksPertanyaan === soal.length - 1"
-            class="bg-gray-300 text-gray-600 px-4 py-2 rounded"
-          >
-            Selanjutnya
-          </button>
+          <div class="w-1/4 flex items-center justify-center">
+            <div class="relative">
+              <div class="px-6 py-4 border flex items-center justify-center">
+                <p class="text-4xl font-bold">
+                  {{ Math.floor(timer / 60) }}:{{
+                    timer % 60 < 10 ? "0" + (timer % 60) : timer % 60
+                  }}
+                </p>
+              </div>
+              <div
+                class="absolute top-0 left-0 w-full h-full rounded-full transform rotate-90"
+              ></div>
+            </div>
+          </div>
         </div>
 
         <button
           @click="kirimJawaban"
-          class="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
+          class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600"
         >
           Submit
         </button>
@@ -157,7 +172,7 @@
 
           <button
             @click="resetSemua"
-            class="bg-red-500 text-white px-4 py-2 rounded"
+            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
           >
             Keluar
           </button>
