@@ -72,6 +72,23 @@
       >
         <h1 class="text-3xl font-bold mb-4 text-center">Ujian Online</h1>
 
+        <div class="grid grid-cols-7 gap-4">
+          <div class="col-span-1">
+            <div v-for="(question, key) in soal" :key="question.id">
+              <div
+                class="border rounded p-2 text-center cursor-pointer"
+                @click="gotoSoal(key)"
+                :class="{
+                  'bg-green-500 text-white': question.jawabanYangDipilih,
+                  'bg-gray-400 cursor-not-allowed':
+                    key !== indeksPertanyaan && !question.jawabanYangDipilih,
+                }"
+              >
+                {{ question.id }}
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="flex">
           <div class="w-3/4 pr-6">
             <!-- Perubahan disini: Menambahkan padding kanan -->
@@ -191,10 +208,16 @@ const kelas = ref("");
 const jenisKelamin = ref("");
 const mulaiSoal = ref(false);
 const indeksPertanyaan = ref(0);
-const timer = ref(300); // Timer 5 menit
 const timerIntervalId = ref(null);
-const waktuPengerjaan = ref(300); // Waktu pengerjaan awal
+const waktuPengerjaan = 3600; // Waktu pengerjaan awal 1 jam
+const timer = ref(waktuPengerjaan); // Timer sesuai kebutuhan
 const waktuSelesai = ref(null);
+
+const gotoSoal = (key) => {
+  if (key >= 0 && key < soal.length) {
+    indeksPertanyaan.value = key;
+  }
+};
 
 onMounted(() => {
   // Bersihkan interval ketika komponen dipasang untuk memastikan tidak ada interval residual
