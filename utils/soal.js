@@ -59,6 +59,66 @@ const soal = [
     jawabanBenar: '4',
     jawabanYangDipilih: null,
   },
+  {
+    id: 4,
+    pertanyaan: 'Berapakah 5 + 10?',
+    answers: [
+      {
+        content: '4',
+      },
+      {
+        content: '15',
+      },
+      {
+        content: '5',
+      },
+      {
+        content: '9',
+      },
+    ],
+    jawabanBenar: '15',
+    jawabanYangDipilih: null,
+  },
+  {
+    id: 5,
+    pertanyaan: 'Berapakah 3 + 3?',
+    answers: [
+      {
+        content: '4',
+      },
+      {
+        content: '7',
+      },
+      {
+        content: '6',
+      },
+      {
+        content: '9',
+      },
+    ],
+    jawabanBenar: '6',
+    jawabanYangDipilih: null,
+  },
+  {
+    id: 6,
+    pertanyaan: 'Berapakah 8 + 3?',
+    answers: [
+      {
+        content: '4',
+      },
+      {
+        content: '7',
+      },
+      {
+        content: '6',
+      },
+      {
+        content: '11',
+      },
+    ],
+    jawabanBenar: '11',
+    jawabanYangDipilih: null,
+  },
 ];
 
 export { soal };

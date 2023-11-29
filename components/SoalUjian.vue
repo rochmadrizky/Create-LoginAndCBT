@@ -68,27 +68,10 @@
     <div class="min-h-full flex items-center justify-center bg-gray-100">
       <div
         v-if="mulaiSoal"
-        class="bg-white p-14 rounded-lg shadow-md w-full max-w-4xl"
+        class="bg-white p-14 rounded-lg relative shadow-md w-full max-w-4xl"
       >
         <h1 class="text-3xl font-bold mb-4 text-center">Ujian Online</h1>
 
-        <div class="grid grid-cols-7 gap-4">
-          <div class="col-span-1">
-            <div v-for="(question, key) in soal" :key="question.id">
-              <div
-                class="border rounded p-2 text-center cursor-pointer"
-                @click="gotoSoal(key)"
-                :class="{
-                  'bg-green-500 text-white': question.jawabanYangDipilih,
-                  'bg-gray-400 cursor-not-allowed':
-                    key !== indeksPertanyaan && !question.jawabanYangDipilih,
-                }"
-              >
-                {{ question.id }}
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="flex">
           <div class="w-3/4 pr-6">
             <!-- Perubahan disini: Menambahkan padding kanan -->
@@ -134,6 +117,22 @@
             </div>
           </div>
 
+          <div class="right-0 grid grid-cols-3 absolute">
+            <div v-for="(question, key) in soal" :key="question.id">
+              <div
+                class="border rounded p-2 text-center cursor-pointer"
+                @click="gotoSoal(key)"
+                :class="{
+                  'bg-green-500': question.jawabanYangDipilih,
+                  'bg-gray-400 cursor-not-allowed':
+                    key !== indeksPertanyaan && !question.jawabanYangDipilih,
+                }"
+              >
+                {{ question.id }}
+              </div>
+            </div>
+          </div>
+
           <div class="w-1/4 flex items-center justify-center">
             <div class="relative">
               <div class="px-6 py-4 border flex items-center justify-center">
@@ -157,6 +156,7 @@
           Submit
         </button>
 
+        <!--  -->
         <div v-if="tampilkanHasil" class="mt-4">
           <h2 class="text-xl font-bold mb-2">Hasil Ujian</h2>
           <p>Nilai Anda: {{ skor }}</p>
