@@ -1,5 +1,10 @@
 <template>
-  <div class="flex justify-center items-center h-screen">
+  <div
+    class="flex justify-center items-center h-screen bg-cover"
+    style="
+      background-image: url('https://fastly.picsum.photos/id/957/800/500.jpg?hmac=9vdl26QSfV-rucdo-HeyyfzjpaKW4Ur1aR1oDtzbOAk');
+    "
+  >
     <div class="p-8 bg-white border rounded shadow-md w-96 mx-auto">
       <h2 class="text-2xl font-semibold mb-4">Login CBT</h2>
       <div class="form-group mb-4">

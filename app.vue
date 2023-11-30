@@ -1,5 +1,5 @@
 <template>
   <div>
-    <SoalUjian />
+    <Login />
   </div>
 </template>
