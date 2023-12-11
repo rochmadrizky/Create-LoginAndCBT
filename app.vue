@@ -1,5 +1,5 @@
 <template>
   <div>
-    <HomeGuru />
+    <HomeSiswa />
   </div>
 </template>

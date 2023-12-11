@@ -31,7 +31,7 @@
           </ul>
           <p class="text-base mt-2">
             setiap satu mata ujian memiliki waktu 60 menit, gunakan waktu sebaik
-            mungkin. semoga berhasil dan lancar.
+            mungkin. semoga sukses dan lancar.
           </p>
         </div>
 
