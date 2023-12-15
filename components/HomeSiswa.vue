@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-gray-100 px-10">
     <div
-      class="md:flex md:flex-grow max-w-screen-md mx-auto bg-white rounded-md overflow-hidden"
+      class="md:flex md:flex-grow max-w-screen-md mx-auto bg-white rounded-md border border-black shadow-2xl"
     >
       <div class="w-full">
         <img
