@@ -1,11 +1,11 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-gray-100 px-10">
     <div
-      class="md:flex md:flex-grow max-w-screen-md mx-auto bg-white rounded-md border border-black shadow-2xl"
+      class="md:flex md:flex-grow max-w-screen-md mx-auto bg-white rounded-md shadow-2xl"
     >
       <div class="w-full">
         <img
-          src="https://fastly.picsum.photos/id/94/800/500.jpg?hmac=hkU_p9BbJ9hhptwsU_FWsF2t7FIRXsl9XzJXL_si1M8"
+          :src="imageUrl"
           alt="Logo Sekolah"
           class="object-cover w-full h-full rounded"
         />
@@ -51,4 +51,7 @@
 <script setup>
 const jamPertama = ref("Matematika");
 const jamKedua = ref("Inggris");
+const imageUrl = ref(
+  "https://fastly.picsum.photos/id/94/800/500.jpg?hmac=hkU_p9BbJ9hhptwsU_FWsF2t7FIRXsl9XzJXL_si1M8"
+);
 </script>
